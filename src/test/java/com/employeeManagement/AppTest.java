@@ -1,4 +1,4 @@
-package com.property.propertyManagement;
+package com.employeeManagement;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
