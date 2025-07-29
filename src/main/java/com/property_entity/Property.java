@@ -23,10 +23,8 @@ public class Property {
 	private String state;
 	@Column(name = "City")
 	private String city;
-	@Column(name = "Total area")
+	@Column(name = "total_area")
 	private String total_area;
-	@Column(name = "Dealer_id")
-	private String dealer_id;
 	@Column(name = "Per_Sqft_price")
 	private double per_sqft_price;
 
@@ -37,78 +35,69 @@ public class Property {
 	@OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
 	private List<Customer> customer;
 
-	public final Long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public final void setId(Long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public final String getState() {
+	public String getState() {
 		return state;
 	}
 
-	public final void setState(String state) {
+	public void setState(String state) {
 		this.state = state;
 	}
 
-	public final String getCity() {
+	public String getCity() {
 		return city;
 	}
 
-	public final void setCity(String city) {
+	public void setCity(String city) {
 		this.city = city;
 	}
 
-	public final String getTotal_area() {
+	public String getTotal_area() {
 		return total_area;
 	}
 
-	public final void setTotal_area(String total_area) {
+	public void setTotal_area(String total_area) {
 		this.total_area = total_area;
 	}
 
-	public final String getDealer_id() {
-		return dealer_id;
-	}
-
-	public final void setDealer_id(String dealer_id) {
-		this.dealer_id = dealer_id;
-	}
-
-	public final double getPer_sqft_price() {
+	public double getPer_sqft_price() {
 		return per_sqft_price;
 	}
 
-	public final void setPer_sqft_price(double per_sqft_price) {
+	public void setPer_sqft_price(double per_sqft_price) {
 		this.per_sqft_price = per_sqft_price;
 	}
 
-	public final Dealer getDealer() {
+	public Dealer getDealer() {
 		return dealer;
 	}
 
-	public final void setDealer(Dealer dealer) {
+	public void setDealer(Dealer dealer) {
 		this.dealer = dealer;
 	}
 
-	public final List<Customer> getCustomer() {
+	public List<Customer> getCustomer() {
 		return customer;
 	}
 
-	public final void setCustomer(List<Customer> customer) {
+	public void setCustomer(List<Customer> customer) {
 		this.customer = customer;
 	}
 
-	public Property(Long id, String state, String city, String total_area, String dealer_id, double per_sqft_price,
-			Dealer dealer, Customer cusomer) {
+	public Property(Long id, String state, String city, String total_area, double per_sqft_price, Dealer dealer,
+			Customer cusomer) {
 		super();
 		this.id = id;
 		this.state = state;
 		this.city = city;
 		this.total_area = total_area;
-		this.dealer_id = dealer_id;
 		this.per_sqft_price = per_sqft_price;
 		this.dealer = dealer;
 		this.customer = customer;
@@ -119,11 +108,19 @@ public class Property {
 		// TODO Auto-generated constructor stub
 	}
 
+	public Property(String state, String city, String total_area, double per_sqft_price, Dealer dealer) {
+		super();
+		this.state = state;
+		this.city = city;
+		this.total_area = total_area;
+		this.per_sqft_price = per_sqft_price;
+		this.dealer = dealer;
+	}
+
 	@Override
 	public String toString() {
 		return "Property [id=" + id + ", state=" + state + ", city=" + city + ", total_area=" + total_area
-				+ ", dealer_id=" + dealer_id + ", per_sqft_price=" + per_sqft_price + ", dealer=" + dealer
-				+ ", customer=" + customer + "]";
+				+ ", per_sqft_price=" + per_sqft_price + ", dealer=" + dealer + ", customer=" + customer + "]";
 	}
 
 }
