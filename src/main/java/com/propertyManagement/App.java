@@ -87,87 +87,193 @@ public class App {
 				}
 				
 				else if (input == 4) {
-				System.out.println("update dealer phone No..");
-				String phoneNo = sc.next();
-				System.out.println("dealer deails update successfully..");
-			 
-			} 
-				
+					System.out.println("Enter dealer id to update:");
+                    Long updateDealerId = sc.nextLong();
+                    Dealer updateDealer = dealerDataById(updateDealerId);
+                    if (updateDealer != null) {
+                        System.out.println("Enter new phone number:");
+                        String newPhone = sc.next();
+                        updateDealer.setPhoneNo(newPhone);
+                        System.out.println("Dealer updated.");
+                    } else {
+                        System.out.println("Dealer not found.");
+                    }
+				}
 				else if (input == 5) {
-				System.out.println("update property total Area..");
-				String totaArea = sc.next();
-				System.out.println("update property per sqft price..");
-				String perSqftPrice = sc.next();
-				System.out.println("update property dealer Id ..");
-				String dealerId = sc.next();
-				System.out.println("property update successfully..");
+					System.out.println("Enter property ID to update:");
+                    Long updatePropertyId = sc.nextLong();
+                    Property updateProperty = propertyDataById(updatePropertyId);
+                    if (updateProperty != null) {
+                        System.out.println("Enter new total area:");
+                        String Area = sc.next();
+                        System.out.println("Enter new price per sqft:");
+                        double newPrice = sc.nextDouble();
+                        updateProperty.setTotal_area(Area);
+                        updateProperty.setPer_sqft_price(newPrice);
+                      
+                        System.out.println("Property updated.");
+                    } else {
+                        System.out.println("Property not found.");
+                    }
 			} else if (input == 6) {
-				System.out.println("total property selling total Area ");
-				String totalArea = sc.next();
-				System.out.println("saved property selling details..");
-			} else if (input == 8) {
+				 System.out.println("Enter property ID to sell:");
+                 Long sellPropertyId = sc.nextLong();
+                 Property sellProperty = propertyDataById(sellPropertyId);
+                 if (sellProperty != null) {
+                     
+                     System.out.println("Property marked as sold.");
+                 } else {
+                     System.out.println("Property not found.");
+                 }
+			}
+				 else if(input==7){
+					 System.out.println("Enter dealer ID to delete:");
+	                    Long deleteDealerId = sc.nextLong();
+	                    deleteDealerById(deleteDealerId); 
+				 }
+				 
+			
+			else if(input==8) {
 				System.out.println("property total Area delete");
-				String totalArea = sc.next();
-				System.out.println("delete successfully..");
+				Long deletePropId = sc.nextLong();
+                deletePropertyById(deletePropId);
+				
 			} else {
 				isContinue = false;
 			}
-
-		}
-		System.out.println("Thanks you and visit again...");
+	System.out.println("Thanks you and visit again...");
 	}
-
-	public static void saveDealer(Dealer dealer) {
-		// TODO Auto-generated method stubtt
-		Session session = Hibernatecfg.getSessionFactory().openSession();
-		Transaction tx = session.beginTransaction();
-		session.save(dealer);
-		tx.commit();
-		session.close();
-		System.out.println("Dealer details added");
-
 	}
-
-	public static Dealer dealerDataById(Long dealerId) {
-		Session session = Hibernatecfg.getSessionFactory().openSession();
-		Transaction tx = session.beginTransaction();
-		Dealer dealer = (Dealer) session.get(Dealer.class, dealerId);
-		tx.commit();
-		session.close();
-		return dealer;
-	}
-
-	public static void saveProperty(Property property) {
-		// TODO Auto-generated method stubtt
-		Session session = Hibernatecfg.getSessionFactory().openSession();
-		Transaction tx = session.beginTransaction();
-		session.save(property);
-		tx.commit();
-		session.close();
-		System.out.println("property details added");
-
-	}
-	public static Property propertyDataById(Long propertyId) {
-		Session session = Hibernatecfg.getSessionFactory().openSession();
-		Transaction tx = session.beginTransaction();
-	Property property= (Property) session.get(Property.class, propertyId);
-		tx.commit();
-		session.close();
-		return property;
-	}
-	public static void saveCustomer(Customer customer) {
-		Session session = Hibernatecfg.getSessionFactory().openSession();
-		Transaction tx = session.beginTransaction();
-		session.save(customer);
-		tx.commit();
-		session.close();
-		System.out.println("customer details added");
-
-			// TODO Auto-generated method stubtt
-
-}
 	
-}
+	 public static void saveDealer(Dealer dealer) {
+	        Session session = Hibernatecfg.getSessionFactory().openSession();
+	        Transaction tx = session.beginTransaction();
+	        session.save(dealer);
+	        tx.commit();
+	        session.close();
+	        System.out.println("Dealer saved successfully.");
+	    }
+
+	    public static Dealer dealerDataById(Long dealerId) {
+	        Session session = Hibernatecfg.getSessionFactory().openSession();
+	        Dealer dealer = session.get(Dealer.class, dealerId);
+	        session.close();
+	        return dealer;
+	    }
+
+	    public static void saveProperty(Property property) {
+	        Session session = Hibernatecfg.getSessionFactory().openSession();
+	        Transaction tx = session.beginTransaction();
+	        session.save(property);
+	        tx.commit();
+	        session.close();
+	        System.out.println("Property saved successfully.");
+	    }
+
+	    public static Property propertyDataById(Long propertyId) {
+	        Session session = Hibernatecfg.getSessionFactory().openSession();
+	        Property property = session.get(Property.class, propertyId);
+	        session.close();
+	        return property;
+	    }
+
+	    public static void saveCustomer(Customer customer) {
+	        Session session = Hibernatecfg.getSessionFactory().openSession();
+	        Transaction tx = session.beginTransaction();
+	        session.save(customer);
+	        tx.commit();
+	        session.close();
+	        System.out.println("Customer saved successfully.");
+	    }
+
+	    public static void updateEntity(Object entity) {
+	        Session session = Hibernatecfg.getSessionFactory().openSession();
+	        Transaction tx = session.beginTransaction();
+	        session.update(entity);
+	        tx.commit();
+	        session.close();
+	    }
+
+	    public static void deleteDealerById(Long dealerId) {
+	        Session session = Hibernatecfg.getSessionFactory().openSession();
+	        Dealer dealer = session.get(Dealer.class, dealerId);
+	        if (dealer != null) {
+	            Transaction tx = session.beginTransaction();
+	            session.delete(dealer);
+	            tx.commit();
+	            System.out.println("Dealer deleted successfully.");
+	        } else {
+	            System.out.println("Dealer not found.");
+	        }
+	        session.close();
+	    }
+
+	    public static void deletePropertyById(Long propertyId) {
+	        Session session = Hibernatecfg.getSessionFactory().openSession();
+	        Property property = session.get(Property.class, propertyId);
+	        if (property != null) {
+	            Transaction tx = session.beginTransaction();
+	            session.delete(property);
+	            tx.commit();
+	            System.out.println("Property deleted successfully.");
+	        } else {
+	            System.out.println("Property not found.");
+	        }
+	        session.close();
+	    }
+	}
+
+//	public static void saveDealer(Dealer dealer) {
+//		// TODO Auto-generated method stubtt
+//		Session session = Hibernatecfg.getSessionFactory().openSession();
+//		Transaction tx = session.beginTransaction();
+//		session.save(dealer);
+//		tx.commit();
+//		session.close();
+//		System.out.println("Dealer details added");
+//
+//	}
+//
+//	public static Dealer dealerDataById(Long dealerId) {
+//		Session session = Hibernatecfg.getSessionFactory().openSession();
+//		Transaction tx = session.beginTransaction();
+//		Dealer dealer = (Dealer) session.get(Dealer.class, dealerId);
+//		tx.commit();
+//		session.close();
+//		return dealer;
+//	}
+//
+//	public static void saveProperty(Property property) {
+//		// TODO Auto-generated method stubtt
+//		Session session = Hibernatecfg.getSessionFactory().openSession();
+//		Transaction tx = session.beginTransaction();
+//		session.save(property);
+//		tx.commit();
+//		session.close();
+//		System.out.println("property details added");
+//
+//	}
+//	public static Property propertyDataById(Long propertyId) {
+//		Session session = Hibernatecfg.getSessionFactory().openSession();
+//		Transaction tx = session.beginTransaction();
+//	Property property= (Property) session.get(Property.class, propertyId);
+//		tx.commit();
+//		session.close();
+//		return property;
+//	}
+//	public static void saveCustomer(Customer customer) {
+//		Session session = Hibernatecfg.getSessionFactory().openSession();
+//		Transaction tx = session.beginTransaction();
+//		session.save(customer);
+//		tx.commit();
+//		session.close();
+//		System.out.println("customer details added");
+//
+//			// TODO Auto-generated method stubtt
+//
+//}
+//	
+//}
 //}correct the code in hibernate
 
 //        import java.util.Scanner;
