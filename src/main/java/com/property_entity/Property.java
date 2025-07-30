@@ -24,7 +24,7 @@ public class Property {
 	@Column(name = "City")
 	private String city;
 	@Column(name = "total_area")
-	private String total_area;
+	private  double total_area;
 	@Column(name = "Per_Sqft_price")
 	private double per_sqft_price;
 
@@ -59,11 +59,11 @@ public class Property {
 		this.city = city;
 	}
 
-	public String getTotal_area() {
+	public double getTotal_area() {
 		return total_area;
 	}
 
-	public void setTotal_area(String total_area) {
+	public void setTotal_area(double total_area) {
 		this.total_area = total_area;
 	}
 
@@ -91,13 +91,13 @@ public class Property {
 		this.customer = customer;
 	}
 
-	public Property(Long id, String state, String city, String total_area, double per_sqft_price, Dealer dealer,
-			Customer cusomer) {
+	public Property(Long id, String state, String city, double perSqftPrice, double per_sqft_price, Dealer dealer,
+			List<Customer> customer) {
 		super();
 		this.id = id;
 		this.state = state;
 		this.city = city;
-		this.total_area = total_area;
+		this.total_area = perSqftPrice;
 		this.per_sqft_price = per_sqft_price;
 		this.dealer = dealer;
 		this.customer = customer;
@@ -108,19 +108,12 @@ public class Property {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Property(String state, String city, String total_area, double per_sqft_price, Dealer dealer) {
-		super();
-		this.state = state;
-		this.city = city;
-		this.total_area = total_area;
-		this.per_sqft_price = per_sqft_price;
-		this.dealer = dealer;
-	}
-
 	@Override
 	public String toString() {
 		return "Property [id=" + id + ", state=" + state + ", city=" + city + ", total_area=" + total_area
 				+ ", per_sqft_price=" + per_sqft_price + ", dealer=" + dealer + ", customer=" + customer + "]";
 	}
+
+	
 
 }

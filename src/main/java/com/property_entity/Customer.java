@@ -22,7 +22,7 @@ public class Customer {
 	@Column(name = "Govt_id_no")
 	private String govt_id_no;
 	@Column(name = "Buy_area")
-	private String buy_area;
+	private double buy_area;
 	@Column(name = "price")
 	private double price;
 
@@ -62,11 +62,11 @@ public class Customer {
 		this.govt_id_no = govt_id_no;
 	}
 
-	public String getBuy_area() {
+	public double getBuy_area() {
 		return buy_area;
 	}
 
-	public void setBuy_area(String buy_area) {
+	public void setBuy_area(double buy_area) {
 		this.buy_area = buy_area;
 	}
 
@@ -86,7 +86,7 @@ public class Customer {
 		this.property = property;
 	}
 
-	public Customer(Long id, String name, String govt_id_type, String govt_id_no, String buy_area, double price,
+	public Customer(Long id, String name, String govt_id_type, String govt_id_no, double buy_area, double price,
 			Property property) {
 		super();
 		this.id = id;
@@ -103,13 +103,13 @@ public class Customer {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Customer(String name, String govt_id_type, String govt_id_no, String buy_area, double price,
+	public Customer(String name, String govt_id_type, String govt_id_no, double buyArea, double price,
 			Property property) {
 		super();
 		this.name = name;
 		this.govt_id_type = govt_id_type;
 		this.govt_id_no = govt_id_no;
-		this.buy_area = buy_area;
+		this.buy_area = buyArea;
 		this.price = price;
 		this.property = property;
 	}

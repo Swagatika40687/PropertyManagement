@@ -11,7 +11,7 @@ import com.property_entity.Dealer;
 import com.property_entity.Property;
 
 public class App {
-//
+
 	public static void main(String[] args) {
 
 		boolean isContinue = true;
@@ -50,15 +50,16 @@ public class App {
 				System.out.println("Enter the property dealer Id..");
 				Long dealerId = sc.nextLong();
 				System.out.println("Enter property per sqft price..");
-				String perSqftPrice = sc.next();
+				double perSqftPrice = sc.nextDouble();
 				Dealer dealer = dealerDataById(dealerId);
 				if (dealer != null) {
-					Property property = new Property(state, city, perSqftPrice, input, dealer);
+					Property property = new Property(dealerId, state, city, perSqftPrice, input,dealer, null);
 					saveProperty(property);
 					System.out.println("Property data added successfully..");
 				} else {
 					System.out.println("Dealer not existedwith provided id.");
 				}
+			
 			}
 				else if(input==3) {
 					System.out.println("Enter customer name..");
@@ -68,15 +69,15 @@ public class App {
 					System.out.println("Enter customer govt Id No..");
 					String govtIdNo=sc.next();
 					System.out.println("Enter customer buy Area..");
-					String buyArea=sc.next();
+					double buyArea=sc.nextDouble();
 					System.out.println("Enter property price");
 					Double price=sc.nextDouble();
 					System.out.println("Enter the customer property id");
 					Long propertyId=sc.nextLong();
-					Property property=propertyDataById(propertyId);
+					Property property=propertyDataById(propertyId, buyArea);
 					if(property != null) {
 						
-						Customer customer=new Customer(name,govtIdType,govtIdNo,buyArea,price,property);
+						Customer customer=new Customer(name, govtIdType, govtIdNo, buyArea, buyArea, property);
 						saveCustomer(customer);
 						System.out.println("Customer data added successfully..");
 						
@@ -84,6 +85,7 @@ public class App {
 					else {
 						System.out.println("Property not existed with customer id");
 					}
+					
 				}
 				
 				else if (input == 4) {
@@ -117,8 +119,40 @@ public class App {
 		System.out.println("Thanks you and visit again...");
 	}
 
+	private static Property propertyDataById(Long propertyId, double buyArea) {
+		// TODO Auto-generated method stub
+		Session session=Hibernatecfg.getSessionFactory().openSession();
+		Transaction tx=session.beginTransaction();
+		Property property=(Property) session.get(Property.class, propertyId);
+		if(property!=null) {
+		 if(property.getTotal_area()>=buyArea) {
+				property.setTotal_area(property.getTotal_area()-buyArea);
+				session.update(property);
+			}
+			else {
+				System.out.println("not enough sqft available current:"+property.getTotal_area());
+			}
+		if(property.getTotal_area()>=buyArea) {
+			System.out.println("property available..");
+			session.update(property);
+		}
+		else {
+			System.out.println("not enough sqft available current...");
+			
+		}
+		}
+		else
+			{
+				System.out.println("property not found");
+			}
+		
+		tx.commit();
+		session.close();
+		return property;
+	}
+
 	public static void saveDealer(Dealer dealer) {
-		// TODO Auto-generated method stubtt
+		
 		Session session = Hibernatecfg.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
 		session.save(dealer);
@@ -138,7 +172,7 @@ public class App {
 	}
 
 	public static void saveProperty(Property property) {
-		// TODO Auto-generated method stubtt
+		
 		Session session = Hibernatecfg.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
 		session.save(property);
@@ -147,14 +181,7 @@ public class App {
 		System.out.println("property details added");
 
 	}
-	public static Property propertyDataById(Long propertyId) {
-		Session session = Hibernatecfg.getSessionFactory().openSession();
-		Transaction tx = session.beginTransaction();
-	Property property= (Property) session.get(Property.class, propertyId);
-		tx.commit();
-		session.close();
-		return property;
-	}
+
 	public static void saveCustomer(Customer customer) {
 		Session session = Hibernatecfg.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
@@ -163,10 +190,9 @@ public class App {
 		session.close();
 		System.out.println("customer details added");
 
-			// TODO Auto-generated method stubtt
-
 }
 	
+
 }
 //}correct the code in hibernate
 
@@ -229,6 +255,8 @@ public class App {
 //                            System.out.println("Property data added successfully..");
 //                            break;
 //
+
+
 //                        case 4:
 //                            System.out.println("Enter updated dealer phone No:");
 //                            String updatedPhoneNo = sc.nextLine();
