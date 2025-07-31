@@ -71,8 +71,8 @@ public class Property {
 		return per_sqft_price;
 	}
 
-	public void setPer_sqft_price(double per_sqft_price) {
-		this.per_sqft_price = per_sqft_price;
+	public void setPer_sqft_price(double newPrice) {
+		this.per_sqft_price = newPrice;
 	}
 
 	public Dealer getDealer() {

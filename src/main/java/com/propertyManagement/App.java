@@ -132,9 +132,9 @@ public class App {
 			else {
 				System.out.println("not enough sqft available current:"+property.getTotal_area());
 			}
-		if(property.getTotal_area()>=buyArea) {
+		if(property.getTotal_area()>=customer.getTotal_Area) {
 			System.out.println("property available..");
-			session.update(property);
+			
 		}
 		else {
 			System.out.println("not enough sqft available current...");
